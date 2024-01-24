@@ -1,0 +1,85 @@
+---
+title: "Dinesafe explore percentage of pass"
+subtitle: "My subtitle if needed"
+author: 
+  - Siyu Li
+thanks: "Code and data are available at: <https://github.com/SiyuLii/Dinesafe_Analysis.git>"
+date: today
+date-format: long
+abstract: "From the information from Open Data Toronto about Dinesafe, the dataset shows the establishment type, establishment status, inspection date, inspection issue and other factors based on Ontario Food Premises Regulation (493/17). The author uses this data to analyze the number of restaurants' status as pass, conditional pass and closed in 2022 and 2023 and compare the percentage of passes between two years. This paper helps to get a more general idea of how Toronto's food and drink establishments' perform, which can give readers a clear idea to explore more about food safety in the city."
+format: pdf
+number-sections: true
+bibliography: references.bib
+---
+
+```{r}
+#| include: false
+#| warning: false
+#| message: false
+
+#install.packages("here")
+
+library(tidyverse)
+library(palmerpenguins)
+library(here)
+library(knitr)
+
+#### Import Data ####
+#### Explore ####
+dinesafe_program_clean <-
+  read_csv(
+   here::here("outputs/data/cleanded_data.csv"),
+    show_col_types = FALSE
+  )
+```
+
+
+# Introduction
+
+Health become a common topic with the development of living standards nowadays. Food safety is one of the most important parts of health. Food safety is the science of handling, preparing and storing food to reduce the risk of foodborne illnesses. Food contaminated with harmful bacteria, viruses, parasites or chemical substances can cause many illnesses(Public Health Ontario). 
+
+This paper explores the number of establishments that satisfy the Ontario Food Premises Regulation (493/17) which is enacted by the Ontario government and how it is distributed. This data is highly related to public health and the tourism industry. By comparing the number of passed establishments, readers can easily know if the number is increased, decreased or kept constant. The number of pass establishments corresponds to the sanitary condition of the city. If the condition for establishments violates the enactment, it may cause foodborne diseases. Foodborne diseases impede socioeconomic development by straining healthcare systems and harming national economies, tourism and trade(World Health Organization). As an indicator, it is necessary to have the data on establishment status. In another way, this data reflects living standard of citizens ,which estimates the ability of the government. In this paper, author estimate the number of passed restaurant increased, and the number of conditional pass decreased.
+
+The reminder of this paper is construed with data section @sec-data and reference section. @sec-ref The Data section discusses origin of data, how the data is distributed by years and establishment status. Then, compare the establishment status by years. This lets the difference and change can be observed directly. 
+
+
+
+# Data {#sec-data}
+
+The data is from OpenDataToronto[@opendatatoronto] by city of Toronto. Only one dataset is used. There is 
+
+Author analysis data in R[@citeR] by using package 'tidyver()'[@tidyverse] and 'knitr()'[@knitr] to generate the table. Also,'summarise()' [@dplyr] used to get number of pass and conditional pass. This form to create Table@tbl-dinesafe)
+
+```{r}
+#| label: tbl-dinesafe
+#| tbl-cap: Bills of penguins
+#| echo: false
+
+dinesafe_program_clean <- dinesafe_program |> mutate(status = ifelse('establishment_status' == 'Pass',1,2)) |>select(status) 
+
+
+#dinesafe_program_clean |>
+ # mutate(year = year(
+ #   inspection_date
+#  )) |>
+#  arrange(year(inspection_date)) |> 
+  # As there is no Closed status in the dataset, only show Pass ands Conditional  #Pass
+#  summarise(number = num(status),
+#            .by = year) |>
+#  kable(
+#    col.names = c("Year", "Number of Pass", "Number of Conditonal Pass", "Numbber of Closed"),
+#    digits = 2
+ # )
+#
+```
+By the table, it shows there is increase in 2023 for passed establiment. This fir for the initial hypothesis.
+
+Talk way more about it. 
+
+
+\newpage
+
+
+# References{#sec-ref}
+
+
