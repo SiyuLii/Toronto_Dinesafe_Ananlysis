@@ -1,6 +1,5 @@
 ---
 title: "Dinesafe explore percentage of pass"
-subtitle: "My subtitle if needed"
 author: 
   - Siyu Li
 thanks: "Code and data are available at: <https://github.com/SiyuLii/Dinesafe_Analysis.git>"
@@ -20,14 +19,15 @@ bibliography: references.bib
 #install.packages("here")
 #install.packages("knitr")
 #install.packages("dplyr")
+#install.packages("ggplot2")
 
 library(AER)
 library(knitr)
 library(dplyr)
 library(tidyverse)
-library(palmerpenguins)
+#library(palmerpenguins)
 library(here)
-library(knitr)
+library(ggplot2)
 
 #### Import Data ####
 dinesafe_program_clean <-
@@ -37,20 +37,14 @@ dinesafe_program_clean <-
   )
 ```
 
-# Table of Contents
 
-- [Introduction](#section-1)
-- [Data](#section-2)
-- [Reference](#section-3)
-
-
-# Introduction(@section-1)
+# Introduction {#sec-intro}
 
 Health become a common topic with the development of living standards nowadays. Food safety is one of the most important parts of health. Food safety is the science of handling, preparing and storing food to reduce the risk of foodborne illnesses. Food contaminated with harmful bacteria, viruses, parasites or chemical substances can cause many illnesses(Public Health Ontario). 
 
 This paper explores the number of establishments that satisfy the Ontario Food Premises Regulation (493/17) which is enacted by the Ontario government and how it is distributed. This data is highly related to public health and the tourism industry. By comparing the number of passed establishments, readers can easily know if the number is increased, decreased or kept constant. The number of pass establishments corresponds to the sanitary condition of the city. If the condition for establishments violates the enactment, it may cause foodborne diseases. Foodborne diseases impede socioeconomic development by straining healthcare systems and harming national economies, tourism and trade(World Health Organization). As an indicator, it is necessary to have the data on establishment status. In another way, this data reflects living standard of citizens ,which estimates the ability of the government. In this paper, author will explore the how the number of passed and conditional pass restaurant changes in years and how the number of different severity changed.
 
-The reminder of this paper is construed with data section @sec-data and reference section. @sec-ref The Data section discusses origin of data, how the data is distributed by years and establishment status. Then, compare the establishment status by years. This lets the difference and change can be observed directly. 
+The reminder of this paper is construed with data section(@sec-data) and reference section(@sec-ref). The Data section discusses origin of data, how the data is distributed by years and establishment status. Then, compare the establishment status by years. This lets the difference and change can be observed directly. 
 
 
 
@@ -91,7 +85,6 @@ severity_by_year <- dinesafe_program_clean |>
 By the first table(@tbl-status), it shows there is increase in number of establishments in 2023. It implies more establishments open in 2023 compare to 2022. In this table, it include data in 2024. It is obvious the number of establishments is smaller than 2022 and 2023.  
 
 ```{r}
-
 #| label: fig-establishment_status
 #| fig-cap: Number of Pass And Conditional Pass From 2022 to 2024
 #| echo: false
@@ -125,7 +118,14 @@ dinesafe_program_clean |>
   geom_histogram(stat = "count")
 
 ```
-By the figure(@fig-severity)above, it shows the distribution of different level. From it, it express that most of establishments in Toronto have no problems during inspection and the number of significant is large. This means there are certain number of establishments exist.
+
+In figure(@fig-establishment_status) and figure(@fig-severity) use 'ggplot' in package ggplot2[@ggplot2] to draw the histogram figure. By this histogram, the first figure show the strong difference between pass and conditional pass. As there are no establishment get closed status, it only show two status.
+
+By the figure(@fig-severity), it shows the distribution of different level. From it, it express that most of establishments in Toronto have no problems during inspection and the number of significant is large. This means there are certain number of establishments exist.
+
+
+By tables and figures in this paper, it can clearly show that in 2023 there is increase in number of establishments and number of conditional pass. No establishments get closed status implies establishment in Toronto organized well and clean. It provide a safe environment for citizen. By those, it implies Toronto's economic growth is positive as more establishments open in 2023 and economic recovery from pandemic happening. 
+
 
 \newpage
 
