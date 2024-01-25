@@ -18,14 +18,17 @@ bibliography: references.bib
 #| message: false
 
 #install.packages("here")
+#install.packages("knitr")
+#install.packages("dplyr")
 
+library(knitr)
+library(dplyr)
 library(tidyverse)
 library(palmerpenguins)
 library(here)
 library(knitr)
 
 #### Import Data ####
-#### Explore ####
 dinesafe_program_clean <-
   read_csv(
    here::here("outputs/data/cleanded_data.csv"),
@@ -33,6 +36,18 @@ dinesafe_program_clean <-
   )
 ```
 
+# Table of Contents
+
+- [Section 1](#section-1)
+- [Section 2](#section-2)
+- [Section 3](#section-3)
+
+
+## Section 2
+Content for section 2.
+
+## Section 3
+Content for section 3.
 
 # Introduction
 
@@ -52,29 +67,35 @@ Author analysis data in R[@citeR] by using package 'tidyver()'[@tidyverse] and '
 
 ```{r}
 #| label: tbl-dinesafe
-#| tbl-cap: Bills of penguins
+#| tbl-cap: Number of Establishment Get Pass and Conditional Status in Different Year
 #| echo: false
 
-dinesafe_program_clean <- dinesafe_program |> mutate(status = ifelse('establishment_status' == 'Pass',1,2)) |>select(status) 
+status_severity_by_year <- dinesafe_program_clean |>
+  group_by(inspection_year, establishment_status, severity) |>
+  summarise(count = n())
 
-
-#dinesafe_program_clean |>
- # mutate(year = year(
- #   inspection_date
-#  )) |>
-#  arrange(year(inspection_date)) |> 
-  # As there is no Closed status in the dataset, only show Pass ands Conditional  #Pass
-#  summarise(number = num(status),
-#            .by = year) |>
-#  kable(
-#    col.names = c("Year", "Number of Pass", "Number of Conditonal Pass", "Numbber of Closed"),
-#    digits = 2
- # )
-#
 ```
-By the table, it shows there is increase in 2023 for passed establiment. This fir for the initial hypothesis.
+By the table, it shows there is increase in number of establishments in 2023. It implies more establishments open in 2023 compare to 2022. In this table, it include data in 2024. It is obvious the number of establishments is smaller than 2022 and 2023.  for conditional passed establishment.The decrease is  This fir for the initial hypothesis.
 
 Talk way more about it. 
+
+```{r}
+
+# Create a table using kable
+status_severity_table <- status_severity_by_year |>
+  kable(format = "markdown",
+        col.names = c("Year", "Status", "Severity", "Frequency"),
+        caption = "Frequency of Status and Severity by Year")
+
+# Print the table
+print(status_severity_table)
+
+```
+```{r}
+
+hist(status_frequency, main = "Frequency of Status", xlab = "Status", ylab = "Frequency", col = "skyblue", border = "black")
+status_frequency <- table(your_data$status)
+```
 
 
 \newpage
