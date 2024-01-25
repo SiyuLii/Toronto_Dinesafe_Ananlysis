@@ -50,7 +50,7 @@ The reminder of this paper is construed with data section(@sec-data) and referen
 
 # Data {#sec-data}
 
-The data is from OpenDataToronto[@opendatatoronto] by city of Toronto. Only one dataset is used. The original dataset include seventeen variables which is id of the establishments, address, number of inspection per year and other relative variables. However, some of those variables are not related to author's hypothesis. Thus, only three variables are selected for the analysis. Those three variables are establishment status, inspection date and severity. With those variables' data, it express how the establishments perform and number of establishments pass the inspection. This can directly 
+The data is from OpenDataToronto[@opendatatoronto] by city of Toronto. Only one dataset is used. The original dataset include seventeen variables which is id of the establishments, address, number of inspection per year and other relative variables. However, some of those variables are not related to author's hypothesis. Thus, only three variables are selected for the analysis. Those three variables are establishment status, inspection date and severity. With those variables' data, it express how the establishments perform and number of establishments pass the inspection. The trend of change in number can show the active performace in food industry. Thus, author can know the fact in Toronto and how te living standard about dinesafe for citizens.
 
 Author analysis data in R[@citeR] by using package 'tidyver()'[@tidyverse] and 'knitr()'[@knitr] to generate the table. Also,'summarise()' [@dplyr] used to get number of pass, conditional pass, and different severity level. This form to create Table(@tbl-status).
 
