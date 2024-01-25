@@ -4,7 +4,7 @@ This project uses a dataset from Open Data Toronto about Dinesafe to analyze the
 # Dinesafe_Analysis
 The repo is structured as follows:
 
-- input/data contains the data from Open Data Toronto and clean data.
+- input/data contains the data from Open Data Toronto clean data, and sketch.
 
 - outputs/paper contains the final paper and reference bibliography file.
 
