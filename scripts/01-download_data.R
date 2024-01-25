@@ -44,7 +44,7 @@ dinesafe_program_clean <-
 
 write_csv(
   x = dinesafe_program_clean,
-  file = "outputs/data/claneded_data.csv"
+  file = "outputs/data/cleanded_data.csv"
 )
 
 dinesafe_program_clean$inspection_year <- year(dinesafe_program_clean$inspection_date)
