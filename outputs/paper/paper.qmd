@@ -38,16 +38,10 @@ dinesafe_program_clean <-
 
 # Table of Contents
 
-- [Section 1](#section-1)
-- [Section 2](#section-2)
-- [Section 3](#section-3)
+- [Introduction](#section-1)
+- [Data](#section-2)
+- [Reference](#section-3)
 
-
-## Section 2
-Content for section 2.
-
-## Section 3
-Content for section 3.
 
 # Introduction
 
@@ -63,34 +57,53 @@ The reminder of this paper is construed with data section @sec-data and referenc
 
 The data is from OpenDataToronto[@opendatatoronto] by city of Toronto. Only one dataset is used. There is 
 
-Author analysis data in R[@citeR] by using package 'tidyver()'[@tidyverse] and 'knitr()'[@knitr] to generate the table. Also,'summarise()' [@dplyr] used to get number of pass and conditional pass. This form to create Table@tbl-dinesafe)
+Author analysis data in R[@citeR] by using package 'tidyver()'[@tidyverse] and 'knitr()'[@knitr] to generate the table. Also,'summarise()' [@dplyr] used to get number of pass, conditional pass, and different severity level. This form to create Table (@tbl-dinesafe)
 
 ```{r}
-#| label: tbl-dinesafe
-#| tbl-cap: Number of Establishment Get Pass and Conditional Status in Different Year
+#| label: tbl-status
+#| tbl-cap: Number of Establishment Get Pass, Conditional Status in Different Year
 #| echo: false
 
-status_severity_by_year <- dinesafe_program_clean |>
-  group_by(inspection_year, establishment_status, severity) |>
-  summarise(count = n())
+status_by_year <- dinesafe_program_clean |>
+  group_by(inspection_year, establishment_status) |>
+  summarise(count = n(), .groups = "keep") |> 
+  print(kable())
+```
+Next, by using similar package to get table for severity. In this table, it shows five level of severity of inspection. The
+```{r}
+#| label: tbl-severity
+#| tbl-cap: Number of Establishment Get Pass, Conditional Status in Different Year
+#| echo: false
+
+severity_by_year <- dinesafe_program_clean |>
+  group_by(inspection_year, severity) |>
+  summarise(count = n(), .groups = "keep") |>
+  print(kable())
 
 ```
-By the table, it shows there is increase in number of establishments in 2023. It implies more establishments open in 2023 compare to 2022. In this table, it include data in 2024. It is obvious the number of establishments is smaller than 2022 and 2023.  for conditional passed establishment.The decrease is  This fir for the initial hypothesis.
-
-Talk way more about it. 
 
 ```{r}
+#| label: tbl-frenquency
+#| tbl-cap: Number of Establishment Get Pass, Conditional Status and Three Levels of Severity in Different Year
+#| echo: false
+
+merged_data <- merge(status_by_year, severity_by_year, by = "inspection_year", all = TRUE)
+
+# Print the merged data frame
+#print(merged_df)
 
 # Create a table using kable
-status_severity_table <- status_severity_by_year |>
+status_severity_table <- merged_data |>
   kable(format = "markdown",
-        col.names = c("Year", "Status", "Severity", "Frequency"),
+        col.names = c("Year", "Status", "Severity", "Frenquency"),
         caption = "Frequency of Status and Severity by Year")
 
 # Print the table
 print(status_severity_table)
-
 ```
+
+By the first table@tbl-dinesafe, it shows there is increase in number of establishments in 2023. It implies more establishments open in 2023 compare to 2022. In this table, it include data in 2024. It is obvious the number of establishments is smaller than 2022 and 2023.  
+
 ```{r}
 
 hist(status_frequency, main = "Frequency of Status", xlab = "Status", ylab = "Frequency", col = "skyblue", border = "black")
