@@ -48,7 +48,7 @@ dinesafe_program_clean <-
 
 write_csv(
   x = dinesafe_program_clean,
-  file = "inputs/data/cleanded_data.csv"
+  file = "inputs/data/cleaned_data.csv"
 )
 
 summary(dinesafe_program_clean)

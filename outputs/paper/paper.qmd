@@ -65,10 +65,16 @@ Author analysis data in R[@citeR] by using package 'tidyver()'[@tidyverse] and '
 #| tbl-cap: Number of Establishment Get Pass, Conditional Status in Different Year
 #| echo: false
 
+
+status_by_year <- read.csv("cleanded_date.csv")
+
+# Now you can use kable to print it
+#knitr::kable(status_by_year)
+
 status_by_year <- dinesafe_program_clean |>
   group_by(inspection_year, establishment_status) |>
   summarise(count = n(), .groups = "keep") |> 
-  print(kable(status_by_year))
+  knitr::kable(status_by_year)
 ```
 Next, by using similar package to get table for severity. In this table@tbl-severity, it shows five level of severity of inspection. By the table, it obviously show that for number of state is empty(refer to establishment have no problem during inspection) is the most. Establishments have minor state be the second large, which means those establishments have small pronblem but it is not serious.
 ```{r}
