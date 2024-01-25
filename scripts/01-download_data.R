@@ -39,7 +39,8 @@ head(dinesafe_program)
 #### Clean Dataset####
 
 dinesafe_program_clean$inspection_year <- year(dinesafe_program_clean$inspection_date)
-
+# Part of inspired from Professor Rohan's lecture note
+# https://tellingstorieswithdata.com/02-drinking_from_a_fire_hose.html 
 dinesafe_program_clean <-
   clean_names(dinesafe_program) |>
   mutate(inspection_date = ymd(inspection_date)) |>

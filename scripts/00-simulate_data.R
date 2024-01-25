@@ -24,6 +24,8 @@ simulated_data <-
     # The code for date from staackoverflow
     # https://stackoverflow.com/questions/21502332/generating-random-dates
     Inspection_Date = sample(seq(as.Date('2022/01/01'), as.Date('2023/12/31'), by="day"), 76827,replace = 'TRUE'),
+    # This code from Professor Rohan's lecture note
+    # https://tellingstorieswithdata.com/02-drinking_from_a_fire_hose.html 
     # Use 1 through to 76827 to represent each establishment
     "Establishment_id" = 1:76827,
     # Randomly pick an option, with replacement, 76827 times
