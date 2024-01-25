@@ -13,4 +13,4 @@ outputs/paper contains the final paper and reference bibliography file.
 scripts contain the R scripts used to simulate, download and clean data.
 
 # LLM
-No ChatGPT is used to generate code, but Grammarly changes the paper's grammar.
+No ChatGPT is used to generate code, but Grammarly changes grammar in the introduction part.
