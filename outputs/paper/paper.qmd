@@ -32,7 +32,7 @@ library(knitr)
 #### Import Data ####
 dinesafe_program_clean <-
   read_csv(
-   here::here("inputs/data/cleanded_data.csv"),
+   here::here("inputs/data/cleaned_data.csv"),
     show_col_types = FALSE
   )
 ```
@@ -44,7 +44,7 @@ dinesafe_program_clean <-
 - [Reference](#section-3)
 
 
-# Introduction
+# Introduction(@section-1)
 
 Health become a common topic with the development of living standards nowadays. Food safety is one of the most important parts of health. Food safety is the science of handling, preparing and storing food to reduce the risk of foodborne illnesses. Food contaminated with harmful bacteria, viruses, parasites or chemical substances can cause many illnesses(Public Health Ontario). 
 
@@ -58,38 +58,45 @@ The reminder of this paper is construed with data section @sec-data and referenc
 
 The data is from OpenDataToronto[@opendatatoronto] by city of Toronto. Only one dataset is used. The original dataset include seventeen variables which is id of the establishments, address, number of inspection per year and other relative variables. However, some of those variables are not related to author's hypothesis. Thus, only three variables are selected for the analysis. Those three variables are establishment status, inspection date and severity. With those variables' data, it express how the establishments perform and number of establishments pass the inspection. This can directly 
 
-Author analysis data in R[@citeR] by using package 'tidyver()'[@tidyverse] and 'knitr()'[@knitr] to generate the table. Also,'summarise()' [@dplyr] used to get number of pass, conditional pass, and different severity level. This form to create Table @tbl-status
+Author analysis data in R[@citeR] by using package 'tidyver()'[@tidyverse] and 'knitr()'[@knitr] to generate the table. Also,'summarise()' [@dplyr] used to get number of pass, conditional pass, and different severity level. This form to create Table(@tbl-status).
 
 ```{r}
 #| label: tbl-status
 #| tbl-cap: Number of Establishment Get Pass, Conditional Status in Different Year
 #| echo: false
+#| warning: false
+#| message: false
 
 status_by_year <- dinesafe_program_clean |>
   group_by(inspection_year, establishment_status) |>
-  summarise(count = n(), .groups = "keep") |> 
-  print(kable(status_by_year))
+  summarise(count = n(), .groups = "keep") 
+
+  knitr::kable(status_by_year,'markdown',col.names = c("Status", " Severity", "Count"),align = 'c')
 ```
-Next, by using similar package to get table for severity. In this table@tbl-severity, it shows five level of severity of inspection. By the table, it obviously show that for number of state is empty(refer to establishment have no problem during inspection) is the most. Establishments have minor state be the second large, which means those establishments have small pronblem but it is not serious.
+Next, by using similar package to get table for severity. In this table(@tbl-severity), it shows five level of severity of inspection. By the table, it obviously show that for number of state is empty(refer to establishment have no problem during inspection) is the most. Establishments have minor state be the second large, which means those establishments have small pronblem but it is not serious.
 ```{r}
 #| label: tbl-severity
-#| tbl-cap: Number of Establishment Have Five Different Severity Level in Different Year
+#| tbl-cap: Number of Establishment Have Five Different Severity Level From 2022 to 2024
 #| echo: false
+#| warning: false
+#| message: false
 
 severity_by_year <- dinesafe_program_clean |>
   group_by(inspection_year, severity) |>
-  summarise(count = n(), .groups = "keep") |>
-  print(kable(severity_by_year))
+  summarise(count = n(), .groups = "keep") 
+  knitr::kable(severity_by_year,'markdown',col.names = c("Inspection Year", " Severity", "Count"),align = 'c')
 
 ```
 
-By the first table@tbl-dinesafe, it shows there is increase in number of establishments in 2023. It implies more establishments open in 2023 compare to 2022. In this table, it include data in 2024. It is obvious the number of establishments is smaller than 2022 and 2023.  
+By the first table(@tbl-status), it shows there is increase in number of establishments in 2023. It implies more establishments open in 2023 compare to 2022. In this table, it include data in 2024. It is obvious the number of establishments is smaller than 2022 and 2023.  
 
 ```{r}
 
 #| label: fig-establishment_status
 #| fig-cap: Number of Pass And Conditional Pass From 2022 to 2024
+#| echo: false
 #| warning: false
+#| message: false
 
 # this code from Professor Rohan's note  
 # https://tellingstorieswithdata.com/03-workflow.html
@@ -105,7 +112,9 @@ dinesafe_program_clean |>
 ```{r}
 #| label: fig-severity
 #| fig-cap: Number of Five Different Severity Level From 2022 to 2024
+#| echo: false
 #| warning: false
+#| message: false
 
 # this code from Professor Rohan's note  
 # https://tellingstorieswithdata.com/03-workflow.html
@@ -116,7 +125,7 @@ dinesafe_program_clean |>
   geom_histogram(stat = "count")
 
 ```
-By the figure@fig-severity above, it shows the distribution of different level. From it, it express that most of establishments in Toronto have no problems during inspection and the number of significant is large. This means there are certain number of establishments exist.
+By the figure(@fig-severity)above, it shows the distribution of different level. From it, it express that most of establishments in Toronto have no problems during inspection and the number of significant is large. This means there are certain number of establishments exist.
 
 \newpage
 
