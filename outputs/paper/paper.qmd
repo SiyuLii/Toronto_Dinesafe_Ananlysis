@@ -6,7 +6,7 @@ author:
 thanks: "Code and data are available at: <https://github.com/SiyuLii/Dinesafe_Analysis.git>"
 date: today
 date-format: long
-abstract: "From the information from Open Data Toronto about Dinesafe, the dataset shows the establishment type, establishment status, inspection date, inspection issue and other factors based on Ontario Food Premises Regulation (493/17). The author uses this data to analyze the number of restaurants' status as pass, conditional pass and closed in 2022 and 2023 and compare the percentage of passes between two years. This paper helps to get a more general idea of how Toronto's food and drink establishments' perform, which can give readers a clear idea to explore more about food safety in the city."
+abstract: "From the information from Open Data Toronto about Dinesafe, the dataset shows the establishment type, establishment status, inspection date, inspection issue and other factors based on Ontario Food Premises Regulation (493/17). The author uses this data to analyze the number of restaurants' status as pass, conditional pass and closed in 2022 and 2023 and compare the percentage of passes between two years. Finally, author find the perentage of pass decrease every year but the difffernece only 0.003% which can be ignored and the percentage of establishments have problem is over 50% which means half of estabishments have problems. This paper helps to get a more general idea of how Toronto's food and drink establishments' perform, which can give readers a clear idea to explore more about food safety in the city."
 format: pdf
 number-sections: true
 bibliography: references.bib
@@ -21,6 +21,7 @@ bibliography: references.bib
 #install.packages("knitr")
 #install.packages("dplyr")
 
+library(AER)
 library(knitr)
 library(dplyr)
 library(tidyverse)
@@ -57,7 +58,7 @@ The reminder of this paper is construed with data section @sec-data and referenc
 
 The data is from OpenDataToronto[@opendatatoronto] by city of Toronto. Only one dataset is used. The original dataset include seventeen variables which is id of the establishments, address, number of inspection per year and other relative variables. However, some of those variables are not related to author's hypothesis. Thus, only three variables are selected for the analysis. Those three variables are establishment status, inspection date and severity. With those variables' data, it express how the establishments perform and number of establishments pass the inspection. This can directly 
 
-Author analysis data in R[@citeR] by using package 'tidyver()'[@tidyverse] and 'knitr()'[@knitr] to generate the table. Also,'summarise()' [@dplyr] used to get number of pass, conditional pass, and different severity level. This form to create Table (@tbl-dinesafe)
+Author analysis data in R[@citeR] by using package 'tidyver()'[@tidyverse] and 'knitr()'[@knitr] to generate the table. Also,'summarise()' [@dplyr] used to get number of pass, conditional pass, and different severity level. This form to create Table @tbl-status
 
 ```{r}
 #| label: tbl-status
@@ -67,49 +68,55 @@ Author analysis data in R[@citeR] by using package 'tidyver()'[@tidyverse] and '
 status_by_year <- dinesafe_program_clean |>
   group_by(inspection_year, establishment_status) |>
   summarise(count = n(), .groups = "keep") |> 
-  print(kable())
+  print(kable(status_by_year))
 ```
-Next, by using similar package to get table for severity. In this table, it shows five level of severity of inspection. The
+Next, by using similar package to get table for severity. In this table@tbl-severity, it shows five level of severity of inspection. By the table, it obviously show that for number of state is empty(refer to establishment have no problem during inspection) is the most. Establishments have minor state be the second large, which means those establishments have small pronblem but it is not serious.
 ```{r}
 #| label: tbl-severity
-#| tbl-cap: Number of Establishment Get Pass, Conditional Status in Different Year
+#| tbl-cap: Number of Establishment Have Five Different Severity Level in Different Year
 #| echo: false
 
 severity_by_year <- dinesafe_program_clean |>
   group_by(inspection_year, severity) |>
   summarise(count = n(), .groups = "keep") |>
-  print(kable())
+  print(kable(severity_by_year))
 
-```
-
-```{r}
-#| label: tbl-frenquency
-#| tbl-cap: Number of Establishment Get Pass, Conditional Status and Three Levels of Severity in Different Year
-#| echo: false
-
-merged_data <- merge(status_by_year, severity_by_year, by = "inspection_year", all = TRUE)
-
-# Print the merged data frame
-#print(merged_df)
-
-# Create a table using kable
-status_severity_table <- merged_data |>
-  kable(format = "markdown",
-        col.names = c("Year", "Status", "Severity", "Frenquency"),
-        caption = "Frequency of Status and Severity by Year")
-
-# Print the table
-print(status_severity_table)
 ```
 
 By the first table@tbl-dinesafe, it shows there is increase in number of establishments in 2023. It implies more establishments open in 2023 compare to 2022. In this table, it include data in 2024. It is obvious the number of establishments is smaller than 2022 and 2023.  
 
 ```{r}
 
-hist(status_frequency, main = "Frequency of Status", xlab = "Status", ylab = "Frequency", col = "skyblue", border = "black")
-status_frequency <- table(your_data$status)
+#| label: fig-establishment_status
+#| fig-cap: Number of Pass And Conditional Pass From 2022 to 2024
+#| warning: false
+
+# this code from Professor Rohan's note  
+# https://tellingstorieswithdata.com/03-workflow.html
+
+data("dinesafe_program_clean", package = "AER")
+
+dinesafe_program_clean |>
+  ggplot(aes(x = establishment_status)) +
+  geom_histogram(stat = "count")
+
 ```
 
+```{r}
+#| label: fig-severity
+#| fig-cap: Number of Five Different Severity Level From 2022 to 2024
+#| warning: false
+
+# this code from Professor Rohan's note  
+# https://tellingstorieswithdata.com/03-workflow.html
+data("dinesafe_program_clean", package = "AER")
+
+dinesafe_program_clean |>
+  ggplot(aes(x = severity)) +
+  geom_histogram(stat = "count")
+
+```
+By the figure@fig-severity above, it shows the distribution of different level. From it, it express that most of establishments in Toronto have no problems during inspection and the number of significant is large. This means there are certain number of establishments exist.
 
 \newpage
 
