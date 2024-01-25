@@ -10,7 +10,9 @@ install.packages("opendatatoronto")
 install.packages("tidyverse")
 install.packages("dplyr")
 install.packages("janitor")
+install.packages("lubridate")
 
+library(lubridate)
 library(opendatatoronto)
 library(tidyverse)
 library(dplyr)
@@ -38,11 +40,14 @@ head(dinesafe_program)
 dinesafe_program_clean <-
   clean_names(dinesafe_program) |>
   mutate(inspection_date = ymd(inspection_date)) |> 
-  select(establishment_status, inspection_date)
+  select(establishment_status, inspection_date,severity) 
 
 write_csv(
   x = dinesafe_program_clean,
   file = "outputs/data/claneded_data.csv"
 )
 
+dinesafe_program_clean$inspection_year <- year(dinesafe_program_clean$inspection_date)
+
 head(dinesafe_program_clean)
+summary(dinesafe_program_clean)
