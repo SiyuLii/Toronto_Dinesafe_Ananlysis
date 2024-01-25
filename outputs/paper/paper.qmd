@@ -31,7 +31,7 @@ library(knitr)
 #### Import Data ####
 dinesafe_program_clean <-
   read_csv(
-   here::here("outputs/data/cleanded_data.csv"),
+   here::here("inputs/data/cleanded_data.csv"),
     show_col_types = FALSE
   )
 ```
@@ -47,7 +47,7 @@ dinesafe_program_clean <-
 
 Health become a common topic with the development of living standards nowadays. Food safety is one of the most important parts of health. Food safety is the science of handling, preparing and storing food to reduce the risk of foodborne illnesses. Food contaminated with harmful bacteria, viruses, parasites or chemical substances can cause many illnesses(Public Health Ontario). 
 
-This paper explores the number of establishments that satisfy the Ontario Food Premises Regulation (493/17) which is enacted by the Ontario government and how it is distributed. This data is highly related to public health and the tourism industry. By comparing the number of passed establishments, readers can easily know if the number is increased, decreased or kept constant. The number of pass establishments corresponds to the sanitary condition of the city. If the condition for establishments violates the enactment, it may cause foodborne diseases. Foodborne diseases impede socioeconomic development by straining healthcare systems and harming national economies, tourism and trade(World Health Organization). As an indicator, it is necessary to have the data on establishment status. In another way, this data reflects living standard of citizens ,which estimates the ability of the government. In this paper, author estimate the number of passed restaurant increased, and the number of conditional pass decreased.
+This paper explores the number of establishments that satisfy the Ontario Food Premises Regulation (493/17) which is enacted by the Ontario government and how it is distributed. This data is highly related to public health and the tourism industry. By comparing the number of passed establishments, readers can easily know if the number is increased, decreased or kept constant. The number of pass establishments corresponds to the sanitary condition of the city. If the condition for establishments violates the enactment, it may cause foodborne diseases. Foodborne diseases impede socioeconomic development by straining healthcare systems and harming national economies, tourism and trade(World Health Organization). As an indicator, it is necessary to have the data on establishment status. In another way, this data reflects living standard of citizens ,which estimates the ability of the government. In this paper, author will explore the how the number of passed and conditional pass restaurant changes in years and how the number of different severity changed.
 
 The reminder of this paper is construed with data section @sec-data and reference section. @sec-ref The Data section discusses origin of data, how the data is distributed by years and establishment status. Then, compare the establishment status by years. This lets the difference and change can be observed directly. 
 
@@ -55,7 +55,7 @@ The reminder of this paper is construed with data section @sec-data and referenc
 
 # Data {#sec-data}
 
-The data is from OpenDataToronto[@opendatatoronto] by city of Toronto. Only one dataset is used. There is 
+The data is from OpenDataToronto[@opendatatoronto] by city of Toronto. Only one dataset is used. The original dataset include seventeen variables which is id of the establishments, address, number of inspection per year and other relative variables. However, some of those variables are not related to author's hypothesis. Thus, only three variables are selected for the analysis. Those three variables are establishment status, inspection date and severity. With those variables' data, it express how the establishments perform and number of establishments pass the inspection. This can directly 
 
 Author analysis data in R[@citeR] by using package 'tidyver()'[@tidyverse] and 'knitr()'[@knitr] to generate the table. Also,'summarise()' [@dplyr] used to get number of pass, conditional pass, and different severity level. This form to create Table (@tbl-dinesafe)
 

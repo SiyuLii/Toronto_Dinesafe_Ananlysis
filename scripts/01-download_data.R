@@ -37,17 +37,20 @@ write_csv(
 head(dinesafe_program)
 
 #### Clean Dataset####
+
+dinesafe_program_clean$inspection_year <- year(dinesafe_program_clean$inspection_date)
+
 dinesafe_program_clean <-
   clean_names(dinesafe_program) |>
   mutate(inspection_date = ymd(inspection_date)) |> 
-  select(establishment_status, inspection_date,severity) 
+  
+  select(establishment_status, inspection_date,severity, inspection_year) 
+
 
 write_csv(
   x = dinesafe_program_clean,
-  file = "outputs/data/cleanded_data.csv"
+  file = "inputs/data/cleanded_data.csv"
 )
-
-dinesafe_program_clean$inspection_year <- year(dinesafe_program_clean$inspection_date)
 
 head(dinesafe_program_clean)
 summary(dinesafe_program_clean)
